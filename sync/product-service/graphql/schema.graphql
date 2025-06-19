@@ -1,0 +1,24 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+"Indicates what fields are available at the top level of a query operation."
+type Product {
+  id: ID!
+  name: String!
+  description: String
+  price: Float!
+  stock: Int!
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+type Query {
+  products: [Product!]! @all
+  product(id: ID!): Product @first
+}
+
+type Mutation {
+  createProduct(name: String!, description: String, price: Float!, stock: Int!): Product @create
+  updateProduct(id: ID!, name: String, description: String, price: Float, stock: Int): Product @update
+  deleteProduct(id: ID! @where): Product @delete
+}
